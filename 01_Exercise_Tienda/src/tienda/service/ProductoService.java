@@ -1,25 +1,25 @@
-
 package tienda.service;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import tienda.entity.Producto;
+import tienda.persistence.FabricanteDAO;
 import tienda.persistence.ProductoDAO;
 
 
 public class ProductoService {
 
-    ProductoDAO producto;
+    ProductoDAO productoDAO;
 
     public ProductoService() {
-        this.producto = new ProductoDAO();
+        this.productoDAO = new ProductoDAO();
         
     }
     
     public void listaNombresProductos() throws Exception {
         try {
-            List<Producto> productos = producto.getProducto();
+            List<Producto> productos = productoDAO.getProducto();
 
             if (productos.isEmpty()) {
                 throw new Exception("No existen personas");
@@ -36,7 +36,7 @@ public class ProductoService {
     
     public void listaNombresYPrecios() throws Exception {
         try {
-            List<Producto> productos = producto.getProducto();
+            List<Producto> productos = productoDAO.getProducto();
 
             if (productos.isEmpty()) {
                 throw new Exception("No existen productos");
@@ -54,7 +54,7 @@ public class ProductoService {
     
     public void productosEntre120Y202()throws Exception{
         try {
-            List<Producto> productos = producto.listaPorPrecio();
+            List<Producto> productos = productoDAO.listaPorPrecio();
             if (productos.isEmpty()) {
                 throw new Exception("No existen productos");
             } else {
@@ -71,7 +71,7 @@ public class ProductoService {
     
     public void buscarPortatiles() throws Exception{
         try {
-            List<Producto> productos = producto.buscarPortatiles();
+            List<Producto> productos = productoDAO.buscarPortatiles();
             if (productos.isEmpty()) {
                 throw new Exception("No existen productos");
             } else {
@@ -89,7 +89,7 @@ public class ProductoService {
     
     public void productoMasBarato() throws Exception{
         try {
-            List<Producto> productos = producto.productoBarato();
+            List<Producto> productos = productoDAO.productoBarato();
             if (productos.isEmpty()) {
                 throw new Exception("No existen productos");
             } else {
@@ -107,19 +107,44 @@ public class ProductoService {
     public void ingresarProducto() throws Exception{
         try {
             Scanner read = new Scanner(System.in, "ISO-8859-1").useDelimiter("\n").useLocale(Locale.US);
-            Producto productoNuevo = new Producto();
             System.out.println("Ingrese nombre del producto");
-            productoNuevo.setNombre(read.next());
+            String nombre = read.next();
             System.out.println("Ingrese precio del producto");
-            productoNuevo.setPrecio(read.nextDouble());
+            Double precio = read.nextDouble();
             System.out.println("Ingrese codigo del fabricante");
-            productoNuevo.setCodigo_fabricante(read.nextInt());
-            producto.saveProducto(productoNuevo);
-            listaNombresProductos();
-            
+            Integer codigo_fabricante = read.nextInt();
+            crearProducto(nombre,precio,codigo_fabricante);
         } catch (Exception e) {
             throw e;
         }
     }
+    
+    public void crearProducto(String nombre, Double precio, Integer codigo_fabricante) throws Exception{
+        FabricanteDAO fabricante =new FabricanteDAO();
+        try {
+            if (nombre == null || nombre.trim().isEmpty()) {
+                throw new Exception("El nombre es obligatorio");
+            }
+            if (precio == null || precio <0){
+                throw new Exception("El precio no puede estar vacio o ser negativo");
+            
+            }
+            if (codigo_fabricante == null || fabricante.buscarPorCodigoFabricante(codigo_fabricante)==null) {
+                throw new Exception("El codigo del fabricante no existe o esta nulo");
+            }
+            Producto producto = new Producto();
+            producto.setNombre(nombre);
+            producto.setPrecio(precio);
+            producto.setCodigo_fabricante(codigo_fabricante);
+            
+            productoDAO.saveProducto(producto);
+            
+        } catch (Exception e) {
+            throw e;
+      
+        }
+        
+    }
+    
     
 }

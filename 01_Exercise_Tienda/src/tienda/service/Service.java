@@ -2,15 +2,15 @@ package tienda.service;
 
 import java.util.Locale;
 import java.util.Scanner;
-import tienda.persistence.FabricanteDAO;
+
 
 
 public class Service {
    
     private Scanner read = new Scanner(System.in, "ISO-8859-1").useDelimiter("\n").useLocale(Locale.US);
     
-    ProductoService pro = new ProductoService();
-    FabricanteService fabri = new FabricanteService();
+    ProductoService producto = new ProductoService();
+    FabricanteService fabricante = new FabricanteService();
     public void menu() throws Exception {
         
         Integer opcion=null;
@@ -28,33 +28,31 @@ public class Service {
             opcion=read.nextInt();
             switch (opcion) {
                 case 1:
-                    pro.listaNombresProductos();
+                    producto.listaNombresProductos();
                     break;
                 case 2:
-                    pro.listaNombresYPrecios();
+                    producto.listaNombresYPrecios();
                     break;
                 case 3:
-                    pro.productosEntre120Y202();
+                    producto.productosEntre120Y202();
                     break;
                 case 4:
-                    pro.buscarPortatiles();
+                    producto.buscarPortatiles();
                     break;
                 case 5:
-                    pro.productoMasBarato();
+                    producto.productoMasBarato();
                     break;
                 case 6:
-                    pro.ingresarProducto();
+                    producto.ingresarProducto();
                     break;
                 case 7:
-                    fabri.ingresarFabricante();
+                    fabricante.ingresarFabricante();
+                    break;
+                case 8:
                     break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("Ingreso opcion incorrecta");
             }
-            
-            
-        } while (false);
-
+        } while (opcion != 9);
     }
-
 }

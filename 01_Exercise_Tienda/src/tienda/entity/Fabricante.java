@@ -1,25 +1,24 @@
-
 package tienda.entity;
 
 
 public class Fabricante {
     
-    private int codigo;
+    private Integer codigo;
     private String nombre;
 
     public Fabricante() {
     }
 
-    public Fabricante(int codigo, String nombre) {
+    public Fabricante(Integer codigo, String nombre) {
         this.codigo = codigo;
         this.nombre = nombre;
     }
 
-    public int getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 

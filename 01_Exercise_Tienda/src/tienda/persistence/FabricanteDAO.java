@@ -14,8 +14,10 @@ public class FabricanteDAO extends DAO{
                 throw new Exception("El fabricante no debe ser nulo");
             }
             
-            String tamplate = "INSERT INTO fabricante VALUES (NULL, '%s');";
+            String tamplate = "INSERT INTO fabricante VALUES (NULL,'%s');";
             String sql = String.format(tamplate,fabricante.getNombre());
+            System.out.println("STATEMENT");
+            System.out.println(sql);
             insertModifyDelete(sql);
             
         } catch (Exception e) {
@@ -76,4 +78,23 @@ public class FabricanteDAO extends DAO{
         }
     }
     
+    public Fabricante buscarPorCodigoFabricante(Integer codigo) throws Exception{
+        try {
+            String sql = "SELECT * FROM fabricante WHERE codigo = "+codigo;
+            queryDatabase(sql);
+            
+            Fabricante fabricante = null;
+            while (resultSet.next()) {
+                fabricante = new Fabricante();
+
+                fabricante.setCodigo(resultSet.getInt(1));
+                fabricante.setNombre(resultSet.getString(2));
+            }
+            return fabricante;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("Error al obtener los fabricantes");
+        }
+    }
 }

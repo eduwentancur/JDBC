@@ -1,6 +1,4 @@
-
 package tienda.entity;
-
 
 public class Producto {
     
