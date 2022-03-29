@@ -22,7 +22,7 @@ public class ProductoService {
             List<Producto> productos = productoDAO.getProducto();
 
             if (productos.isEmpty()) {
-                throw new Exception("No existen personas");
+                throw new Exception("No existen productos");
             } else {
                 System.out.println("LISTA DE LOS NOMBRE DE TODOS LOS PRODUCTOS\n");
                 for (Producto pro : productos) {
@@ -143,8 +143,6 @@ public class ProductoService {
             throw e;
       
         }
-        
     }
-    
     
 }
