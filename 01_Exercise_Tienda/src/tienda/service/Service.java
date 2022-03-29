@@ -49,6 +49,10 @@ public class Service {
                     fabricante.ingresarFabricante();
                     break;
                 case 8:
+                    producto.editarProducto();
+                    break;
+                case 9:
+                    System.out.println("ADIOS!!!");
                     break;
                 default:
                     System.out.println("Ingreso opcion incorrecta");

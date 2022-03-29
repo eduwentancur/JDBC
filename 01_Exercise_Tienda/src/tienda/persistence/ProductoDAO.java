@@ -7,7 +7,6 @@ import tienda.entity.Producto;
 
 
 public class ProductoDAO extends DAO{
-
     
     public void saveProducto(Producto producto) throws Exception{
         try {
@@ -30,7 +29,7 @@ public class ProductoDAO extends DAO{
                 throw new Exception("El fabricante no puede ser nula");
             }
 
-            String template = "UPDATE producto SET nombre = '%s', precio = %s, codigo_fabricante = %s, WHERE codigo = %s;";
+            String template = "UPDATE producto SET nombre = '%s', precio = '%s', codigo_fabricante = '%s' WHERE codigo = '%s';";
             String sql = String.format(template,producto.getNombre(),producto.getPrecio(),producto.getCodigo_fabricante(),producto.getCodigo());
 
             insertModifyDelete(sql);
@@ -94,7 +93,6 @@ public class ProductoDAO extends DAO{
                 productos.add(producto);
             }
             return productos;
-           
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("Error al obtener los productos");
@@ -116,18 +114,14 @@ public class ProductoDAO extends DAO{
                 producto.setPrecio(resultSet.getDouble(3));
                 producto.setCodigo_fabricante(resultSet.getInt(4));
                 productos.add(producto);
-                
             }
             return productos;
-            
-            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("Error al obtener los productos");
         }finally {
             disconnectDatabase();
         }
-    
     }
     
     public List<Producto> productoBarato() throws Exception{
@@ -144,8 +138,6 @@ public class ProductoDAO extends DAO{
                 
             }
             return productos;
-            
-            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("Error al obtener los productos");
@@ -153,5 +145,9 @@ public class ProductoDAO extends DAO{
             disconnectDatabase();
         }
     }
+    
+    
+    
+    
     
 }

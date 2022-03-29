@@ -17,6 +17,24 @@ public class ProductoService {
         
     }
     
+    public void mostrarProductos() throws Exception{
+        try {
+            List<Producto> productos = productoDAO.getProducto();
+
+            if (productos.isEmpty()) {
+                throw new Exception("No existen personas");
+            } else {
+                System.out.println("LISTA DE PRODUCTOS");
+                System.out.printf("%-10s%-35s%-15s%-20s\n", "codigo", "nombre", "precio", "codigo_fabricante");
+                for (Producto pro : productos) {
+                    System.out.printf("%-10s%-35s%-15s%-20s\n", pro.getCodigo(), pro.getNombre(),pro.getPrecio(), pro.getCodigo_fabricante());
+                }
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
     public void listaNombresProductos() throws Exception {
         try {
             List<Producto> productos = productoDAO.getProducto();
@@ -81,7 +99,6 @@ public class ProductoService {
                     System.out.printf("%-10s%-35s%-20s%-20s\n",pro.getCodigo(),pro.getNombre(),pro.getPrecio(),pro.getCodigo_fabricante());
                 }
             }
-            
         } catch (Exception e) {
             throw e;
         }
@@ -127,7 +144,6 @@ public class ProductoService {
             }
             if (precio == null || precio <0){
                 throw new Exception("El precio no puede estar vacio o ser negativo");
-            
             }
             if (codigo_fabricante == null || fabricante.buscarPorCodigoFabricante(codigo_fabricante)==null) {
                 throw new Exception("El codigo del fabricante no existe o esta nulo");
@@ -136,13 +152,33 @@ public class ProductoService {
             producto.setNombre(nombre);
             producto.setPrecio(precio);
             producto.setCodigo_fabricante(codigo_fabricante);
-            
             productoDAO.saveProducto(producto);
-            
         } catch (Exception e) {
             throw e;
-      
         }
     }
     
+    public void editarProducto() throws Exception{
+        try {
+            Scanner read = new Scanner(System.in, "ISO-8859-1").useDelimiter("\n").useLocale(Locale.US);
+            mostrarProductos();
+            System.out.println("Ingrese el codigo del producto que desea modificar");
+            Integer codigo=read.nextInt();
+            System.out.println("Ingrese nuevo nombre");
+            String nombre = read.next();
+            System.out.println("Ingrese el nuevo precio");
+            Double precio = read.nextDouble();
+            System.out.println("Ingrese el codigo del fabricante");
+            Integer codigo_fabricante = read.nextInt();
+            Producto producto = new Producto();
+            producto.setCodigo(codigo);
+            producto.setNombre(nombre);
+            producto.setPrecio(precio);
+            producto.setCodigo_fabricante(codigo_fabricante);
+            productoDAO.modifyProducto(producto);
+            mostrarProductos();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
