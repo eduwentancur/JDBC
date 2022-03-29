@@ -2,7 +2,6 @@ package tienda.entity;
 
 
 public class Fabricante {
-    
     private Integer codigo;
     private String nombre;
 
