@@ -1,4 +1,3 @@
-
 package estancias.entidades;
 
 import java.sql.Date;
