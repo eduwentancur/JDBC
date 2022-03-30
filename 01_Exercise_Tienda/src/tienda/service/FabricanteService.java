@@ -1,5 +1,6 @@
 package tienda.service;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import tienda.entity.Fabricante;
@@ -29,13 +30,35 @@ public class FabricanteService {
             if (nombre==null || nombre.trim().isEmpty()) {
                 throw new Exception("Error, el nombre no puede estar nulo");
             }
-            
             Fabricante fabricanteNuevo = new Fabricante();
             fabricanteNuevo.setNombre(nombre);
             fabricanteDAO.saveFabricante(fabricanteNuevo);
-            
+            //System.out.println("-"+fabricanteNuevo.toString());
+            mostrarFabricantes();
         } catch (Exception e) {
             throw e;
         }
     }
+    
+    public void mostrarFabricantes() throws Exception{
+        try {
+            List<Fabricante> fabricantes = fabricanteDAO.getFabricante();
+
+            if (fabricantes.isEmpty()) {
+                throw new Exception("No existen fabricantes!");
+            } else {
+                System.out.println("LISTA DE LOS FABRICANTES\n");
+                for (Fabricante f : fabricantes) {
+                    System.out.printf("%-15s\n\n", f.toString());
+                }
+            }
+            
+        } catch (Exception e) {
+            throw e ;
+        }
+    
+    
+    
+    }
+    
 }

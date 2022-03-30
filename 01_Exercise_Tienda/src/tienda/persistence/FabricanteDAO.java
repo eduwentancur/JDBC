@@ -1,4 +1,3 @@
-
 package tienda.persistence;
 
 import java.util.ArrayList;
@@ -13,15 +12,14 @@ public class FabricanteDAO extends DAO{
             if(fabricante == null){
                 throw new Exception("El fabricante no debe ser nulo");
             }
-            
             String tamplate = "INSERT INTO fabricante VALUES (NULL,'%s');";
             String sql = String.format(tamplate,fabricante.getNombre());
-            System.out.println("STATEMENT");
-            System.out.println(sql);
-            insertModifyDelete(sql);
             
+            insertModifyDelete(sql);
         } catch (Exception e) {
             throw e;
+        }finally {
+            disconnectDatabase();
         }
     }
     
@@ -30,68 +28,59 @@ public class FabricanteDAO extends DAO{
             if (fabricante == null) {
                 throw new Exception("El fabricante no puede ser nula");
             }
-
-            String template = "UPDATE fabricante SET nombre = '%s', WHERE codigo = %s;";
+            String template = "UPDATE fabricante SET nombre = '%s' WHERE codigo = %s;";
             String sql = String.format(template,fabricante.getNombre(),fabricante.getCodigo() );
-
             insertModifyDelete(sql);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("Error al modificar un fabricante");
+        }finally {
+            disconnectDatabase();
         }
     }
     
     public void deleteFabricante(Integer codigo) throws Exception {
         try {
             String sql = "DELETE FROM fabricante WHERE codigo = " + codigo + ";";
-
             insertModifyDelete(sql);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("Error al eliminar un fabricante");
+        }finally {
+            disconnectDatabase();
         }
     }
 
     public List<Fabricante> getFabricante() throws Exception {
         try {
             String sql = "SELECT * FROM fabricante;";
-
             queryDatabase(sql);
-
             List<Fabricante> fabricantes = new ArrayList<>();
             Fabricante fabricante;
-
             while (resultSet.next()) {
                 fabricante = new Fabricante();
-
                 fabricante.setCodigo(resultSet.getInt(1));
                 fabricante.setNombre(resultSet.getString(2));
-
                 fabricantes.add(fabricante);
             }
             return fabricantes;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("Error al obtener los fabricantes");
-        } finally {
-            disconnectDatabase();
-        }
+        } 
     }
     
     public Fabricante buscarPorCodigoFabricante(Integer codigo) throws Exception{
         try {
             String sql = "SELECT * FROM fabricante WHERE codigo = "+codigo;
             queryDatabase(sql);
-            
             Fabricante fabricante = null;
             while (resultSet.next()) {
                 fabricante = new Fabricante();
-
                 fabricante.setCodigo(resultSet.getInt(1));
                 fabricante.setNombre(resultSet.getString(2));
             }
             return fabricante;
-            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("Error al obtener los fabricantes");

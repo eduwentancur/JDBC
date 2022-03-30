@@ -5,12 +5,12 @@ public class Producto {
     private int codigo;
     private String nombre;
     private Double precio;
-    private Integer codigo_fabricante;
+    private Fabricante codigo_fabricante;
 
     public Producto() {
     }
 
-    public Producto(int codigo, String nombre, Double precio, Integer codigo_fabricante) {
+    public Producto(int codigo, String nombre, Double precio, Fabricante codigo_fabricante) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
@@ -41,11 +41,23 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Integer getCodigo_fabricante() {
+    public Fabricante getCodigo_fabricante() {
         return codigo_fabricante;
     }
 
-    public void setCodigo_fabricante(Integer codigo_fabricante) {
+    public void setCodigo_fabricante(Fabricante codigo_fabricante) {
         this.codigo_fabricante = codigo_fabricante;
     }
+
+    @Override
+    public String toString() {
+        
+        return "Producto:\n" + "codigo= " 
+                + codigo + ", nombre= " 
+                + nombre + ", precio= " 
+                + precio + ", codigo_fabricante= " 
+                + codigo_fabricante.getCodigo() + '}';
+    }
+    
+    
 }

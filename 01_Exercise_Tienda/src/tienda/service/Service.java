@@ -4,14 +4,14 @@ import java.util.Locale;
 import java.util.Scanner;
 
 
-
 public class Service {
    
     private Scanner read = new Scanner(System.in, "ISO-8859-1").useDelimiter("\n").useLocale(Locale.US);
     
-    ProductoService producto = new ProductoService();
-    FabricanteService fabricante = new FabricanteService();
-    public void menu() throws Exception {
+    
+    public void Menu() throws Exception {
+        ProductoService producto = new ProductoService();
+        FabricanteService fabricante = new FabricanteService();
         
         Integer opcion=null;
         do {
@@ -34,7 +34,7 @@ public class Service {
                     producto.listaNombresYPrecios();
                     break;
                 case 3:
-                    producto.productosEntre120Y202();
+                    producto.productosEntrePrecios();
                     break;
                 case 4:
                     producto.buscarPortatiles();
@@ -56,6 +56,7 @@ public class Service {
                     break;
                 default:
                     System.out.println("Ingreso opcion incorrecta");
+                    break;
             }
         } while (opcion != 9);
     }

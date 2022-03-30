@@ -1,7 +1,7 @@
 package tienda.entity;
 
-
 public class Fabricante {
+    
     private Integer codigo;
     private String nombre;
 
@@ -29,4 +29,10 @@ public class Fabricante {
         this.nombre = nombre;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Fabricante:\n codigo: %s, nombre: %s",this.codigo,this.nombre);
+    }
+    
+    
 }
