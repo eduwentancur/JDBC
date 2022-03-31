@@ -9,48 +9,48 @@ import tienda.entity.Producto;
 public class ProductoDAO extends DAO implements Crud<Producto, Integer> {
 
     @Override
-    public void create(Producto producto) throws Exception {
+    public void ingresar(Producto producto) throws Exception {
         String tamplate = "INSERT INTO producto VALUES (NULL, '%s', '%s', '%s');";
         String sql = String.format(tamplate, producto.getNombre(), producto.getPrecio(), producto.getCodigo_fabricante().getCodigo());
         insertModifyDelete(sql);
     }
 
     @Override
-    public void update(Producto producto) throws Exception {
+    public void modificar(Producto producto) throws Exception {
         String template = "UPDATE producto SET nombre = '%s', precio = '%s', codigo_fabricante = '%s' WHERE codigo = '%s';";
         String sql = String.format(template, producto.getNombre(), producto.getPrecio(), producto.getCodigo_fabricante().getCodigo(), producto.getCodigo());
         insertModifyDelete(sql);
     }
 
     @Override
-    public void deleteById(Integer codigo) throws Exception {
+    public void eliminarPorId(Integer codigo) throws Exception {
         String sql = "DELETE FROM producto WHERE codigo = " + codigo + ";";
         insertModifyDelete(sql);
     }
 
     @Override
-    public Producto findById(Integer codigo) throws Exception {
+    public Producto buscarPorId(Integer codigo) throws Exception {
         String sql = "SELECT * FROM producto p INNER JOIN fabricante f ON p.codigo_fabricante=f.codigo WHERE p.codigo = " + codigo + ";";
         queryDatabase(sql);
         while (resultSet.next()) {
-            return findOne();
+            return buscarUno();
         }
         return null;
     }
 
     @Override
-    public List<Producto> findAll() throws Exception {
+    public List<Producto> buscarTodo() throws Exception {
         String sql = "SELECT * FROM producto p INNER JOIN fabricante f ON p.codigo_fabricante=f.codigo;";
         queryDatabase(sql);
         List<Producto> productos = new ArrayList<>();
         while (resultSet.next()) {
-            productos.add(findOne());
+            productos.add(buscarUno());
         }
         return productos;
     }
 
     @Override
-    public Producto findOne() throws SQLException {
+    public Producto buscarUno() throws SQLException {
         Producto producto = new Producto();
         producto.setCodigo(resultSet.getInt(1));
         producto.setNombre(resultSet.getString(2));
@@ -68,7 +68,7 @@ public class ProductoDAO extends DAO implements Crud<Producto, Integer> {
             queryDatabase(sql);
             List<Producto> productos = new ArrayList<>();
             while (resultSet.next()) {
-                productos.add(findOne());
+                productos.add(buscarUno());
             }
             return productos;
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class ProductoDAO extends DAO implements Crud<Producto, Integer> {
             queryDatabase(sql);
             List<Producto> productos = new ArrayList<>();
             while (resultSet.next()) {
-                productos.add(findOne());
+                productos.add(buscarUno());
             }
             return productos;
         } catch (Exception e) {
@@ -98,7 +98,7 @@ public class ProductoDAO extends DAO implements Crud<Producto, Integer> {
             queryDatabase(sql);
             List<Producto> productos = new ArrayList<>();
             while (resultSet.next()) {
-                productos.add(findOne());
+                productos.add(buscarUno());
             }
             return productos;
         } catch (Exception e) {

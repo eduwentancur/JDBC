@@ -15,7 +15,7 @@ public class Service {
         
         Integer opcion=null;
         do {
-            System.out.println("INGRESE OPCION\n"
+            System.out.println("\nINGRESE OPCION\n"
                     + "1-Listar el nombre de todos los productos.\n"
                     + "2-Listar los nombres y los precios de todos los productos de la tabla producto.\n"
                     + "3-Listar aquellos productos que su precio este entre 120 y 202.\n"

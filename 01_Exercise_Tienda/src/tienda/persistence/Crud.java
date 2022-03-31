@@ -3,17 +3,17 @@ package tienda.persistence;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface Crud<E, Codigo> {
+public interface Crud<E, ID> {
     
-    void create(E entity)throws Exception;
+    void ingresar(E entity)throws Exception;
     
-    void update(E entity)throws Exception;
+    void modificar(E entity)throws Exception;
     
-    void deleteById(Codigo Codigo)throws Exception;
+    void eliminarPorId(ID id)throws Exception;
     
-    E findById(Codigo id)throws Exception;
+    E buscarPorId(ID id)throws Exception;
     
-    List<E> findAll()throws Exception;
+    List<E> buscarTodo()throws Exception;
     
-    E findOne() throws SQLException;
+    E buscarUno() throws SQLException;
 }

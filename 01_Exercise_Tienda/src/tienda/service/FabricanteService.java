@@ -32,7 +32,7 @@ public class FabricanteService {
             }
             Fabricante fabricanteNuevo = new Fabricante();
             fabricanteNuevo.setNombre(nombre);
-            fabricanteDAO.create(fabricanteNuevo);
+            fabricanteDAO.ingresar(fabricanteNuevo);
             mostrarFabricantes();
         } catch (Exception e) {
             throw e;
@@ -41,7 +41,7 @@ public class FabricanteService {
     
     public void mostrarFabricantes() throws Exception{
         try {
-            List<Fabricante> fabricantes = fabricanteDAO.findAll();
+            List<Fabricante> fabricantes = fabricanteDAO.buscarTodo();
             if (fabricantes.isEmpty()) {
                 throw new Exception("No existen fabricantes!");
             } else {
