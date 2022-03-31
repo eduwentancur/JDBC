@@ -20,7 +20,7 @@ public class ProductoService {
 
     public void mostrarProductos() throws Exception {
         try {
-            List<Producto> productos = productoDAO.getProducto();
+            List<Producto> productos = productoDAO.findAll();
 
             if (productos.isEmpty()) {
                 throw new Exception("No existen personas");
@@ -38,8 +38,7 @@ public class ProductoService {
 
     public void listaNombresProductos() throws Exception {
         try {
-            List<Producto> productos = productoDAO.getProducto();
-
+            List<Producto> productos = productoDAO.findAll();
             if (productos.isEmpty()) {
                 throw new Exception("No existen productos!");
             } else {
@@ -55,7 +54,7 @@ public class ProductoService {
 
     public void listaNombresYPrecios() throws Exception {
         try {
-            List<Producto> productos = productoDAO.getProducto();
+            List<Producto> productos = productoDAO.findAll();
 
             if (productos.isEmpty()) {
                 throw new Exception("No existen productos");
@@ -88,7 +87,7 @@ public class ProductoService {
         }
     }
 
-    public void buscarPortatiles() throws Exception {
+    public void mostrarPortatiles() throws Exception {
         try {
             List<Producto> productos = productoDAO.buscarPortatiles();
             if (productos.isEmpty()) {
@@ -124,17 +123,19 @@ public class ProductoService {
 
     public void ingresarProducto() throws Exception {
         try {
+            FabricanteService f = new FabricanteService();
             Scanner read = new Scanner(System.in, "ISO-8859-1").useDelimiter("\n").useLocale(Locale.US);
             System.out.println("Ingrese nombre del producto");
             String nombre = read.next();
             System.out.println("Ingrese precio del producto");
             Double precio = read.nextDouble();
-            System.out.println("Ingrese codigo del fabricante");
+            f.mostrarFabricantes();
+            System.out.println("Ingrese codigo del fabricante que este en la lista");
             Integer codigo_fabricante = read.nextInt();
-            Fabricante fabricante = fabricanteDAO.buscarPorCodigoFabricante(codigo_fabricante);
+            Fabricante fabricante = fabricanteDAO.findById(codigo_fabricante);
             crearProducto(nombre, precio, fabricante);
         } catch (Exception e) {
-            throw e;
+            System.out.println("ERROR!!! EL CODIGO DEL FABRICANTE NO EXISTE "+e);
         }
     }
 
@@ -146,14 +147,14 @@ public class ProductoService {
             if (precio == null || precio < 0) {
                 throw new Exception("El precio no puede estar vacio o ser negativo");
             }
-            if (fabricante == null || fabricanteDAO.buscarPorCodigoFabricante(fabricante.getCodigo()) == null) {
+            if (fabricante == null || fabricanteDAO.findById(fabricante.getCodigo()) == null) {
                 throw new Exception("El codigo del fabricante no existe o esta nulo");
             }
             Producto producto = new Producto();
             producto.setNombre(nombre);
             producto.setPrecio(precio);
             producto.setCodigo_fabricante(fabricante);
-            productoDAO.saveProducto(producto);
+            productoDAO.create(producto);
         } catch (Exception e) {
             throw e;
         }
@@ -165,7 +166,7 @@ public class ProductoService {
             mostrarProductos();
             System.out.println("Ingrese el codigo del producto que desea modificar");
             Integer codigo = read.nextInt();
-            Producto producto = productoDAO.buscarProductoId(codigo);
+            Producto producto = productoDAO.findById(codigo);
             try {
                 System.out.println(producto.toString());
                 int opcion;
@@ -190,7 +191,7 @@ public class ProductoService {
                         case 3:
                             System.out.println("Ingrese codigo del fabricante");
                             Integer codigo_fabricante = read.nextInt();
-                            Fabricante fabricante = fabricanteDAO.buscarPorCodigoFabricante(codigo_fabricante);
+                            Fabricante fabricante = fabricanteDAO.findById(codigo_fabricante);
                             producto.setCodigo_fabricante(fabricante);
                             break;
                         case 4:
@@ -204,7 +205,7 @@ public class ProductoService {
             } catch (Exception e) {
                 throw new Exception ("Error al editar un producto "+e);
             }
-            productoDAO.modifyProducto(producto);
+            productoDAO.update(producto);
             mostrarProductos();
         } catch (Exception e) {
             System.out.println("ERROR!!! NO SE ENCONTRO EL PRODUCTO O EL CODIGO DEL FABRICANTE NO EXISTE "+e);

@@ -31,7 +31,7 @@ public class Fabricante {
 
     @Override
     public String toString() {
-        return String.format("Fabricante:\n codigo: %s, nombre: %s",this.codigo,this.nombre);
+        return String.format("%s %s\n",this.codigo,this.nombre);
     }
     
     

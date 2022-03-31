@@ -51,13 +51,10 @@ public class Producto {
 
     @Override
     public String toString() {
-        
         return "Producto:\n" + "codigo= " 
                 + codigo + ", nombre= " 
                 + nombre + ", precio= " 
                 + precio + ", codigo_fabricante= " 
                 + codigo_fabricante.getCodigo() + '}';
     }
-    
-    
 }

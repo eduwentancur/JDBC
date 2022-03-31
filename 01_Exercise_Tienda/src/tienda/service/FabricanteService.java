@@ -32,8 +32,7 @@ public class FabricanteService {
             }
             Fabricante fabricanteNuevo = new Fabricante();
             fabricanteNuevo.setNombre(nombre);
-            fabricanteDAO.saveFabricante(fabricanteNuevo);
-            //System.out.println("-"+fabricanteNuevo.toString());
+            fabricanteDAO.create(fabricanteNuevo);
             mostrarFabricantes();
         } catch (Exception e) {
             throw e;
@@ -42,23 +41,17 @@ public class FabricanteService {
     
     public void mostrarFabricantes() throws Exception{
         try {
-            List<Fabricante> fabricantes = fabricanteDAO.getFabricante();
-
+            List<Fabricante> fabricantes = fabricanteDAO.findAll();
             if (fabricantes.isEmpty()) {
                 throw new Exception("No existen fabricantes!");
             } else {
                 System.out.println("LISTA DE LOS FABRICANTES\n");
                 for (Fabricante f : fabricantes) {
-                    System.out.printf("%-15s\n\n", f.toString());
+                    System.out.printf("%s", f.toString());
                 }
             }
-            
         } catch (Exception e) {
             throw e ;
         }
-    
-    
-    
     }
-    
 }

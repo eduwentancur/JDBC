@@ -37,7 +37,7 @@ public class Service {
                     producto.productosEntrePrecios();
                     break;
                 case 4:
-                    producto.buscarPortatiles();
+                    producto.mostrarPortatiles();
                     break;
                 case 5:
                     producto.productoMasBarato();
